@@ -1,5 +1,7 @@
+# -*- coding: UTF-8 -*-
+
 """
-Hola mundo en python
+Ejemplo de uso de Reduction en Python con mpi4py
 """
 
 import numpy
@@ -11,16 +13,20 @@ if not MPI.Is_initialized():
 comm = MPI.COMM_WORLD
 myid = comm.Get_rank()
 size = comm.Get_size()
+
 N = 10
+
 chunk = N / size
 rest = N % size
 
 data = numpy.empty(N, dtype='d')
 
+# La inicialización de los datos se hace en el proceso padre
 if myid == 0:
     data = numpy.random.sample(N)
     print 'Data in root is: ', data
 
+# El proceso padre hace un broadcast de los datos hacia todos los demás
 comm.Bcast([data, MPI.DOUBLE], root=0)
 
 start = myid * chunk

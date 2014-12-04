@@ -1,3 +1,5 @@
+# -*- coding: UTF-8 -*-
+
 import numpy
 import mpi4py.MPI as MPI
 
